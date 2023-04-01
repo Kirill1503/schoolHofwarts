@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class StudentController {
 
 
-    StudentService studentService;
+    private final StudentService studentService;
 
     public StudentController(StudentService studentService) {
         this.studentService = studentService;

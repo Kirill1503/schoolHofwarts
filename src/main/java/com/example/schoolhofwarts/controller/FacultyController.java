@@ -13,7 +13,11 @@ import org.springframework.web.bind.annotation.*;
 public class FacultyController {
 
 
-    FacultyService facultyService;
+    private final FacultyService facultyService;
+
+    public FacultyController(FacultyService facultyService) {
+        this.facultyService = facultyService;
+    }
 
     @GetMapping("{id}")
     public ResponseEntity<Faculty> getFaculty (@PathVariable Long id) {
@@ -30,7 +34,7 @@ public class FacultyController {
     }
 
     @PutMapping
-    public ResponseEntity<Faculty> putFaculty(Faculty faculty) {
+    public ResponseEntity<Faculty> putFaculty(@RequestBody Faculty faculty) {
         Faculty foundFaculty = facultyService.putFaculty(faculty);
         if (foundFaculty == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();

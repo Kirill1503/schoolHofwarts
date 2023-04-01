@@ -6,30 +6,32 @@ import com.example.schoolhofwarts.repositories.FacultyRepository;
 import org.springframework.stereotype.Service;
 
 
-
 @Service
 public class FacultyService {
 
 
-    FacultyRepository facultyRepository;
+    private final FacultyRepository facultyRepository;
 
     public FacultyService(FacultyRepository facultyRepository) {
         this.facultyRepository = facultyRepository;
     }
 
-    public Faculty getFaculty (Long id) {
-        return facultyRepository.findById(id).get();
+    public Faculty getFaculty(Long id) {
+        return facultyRepository.findById(id).orElse(null);
     }
 
-    public Faculty postFaculty (Faculty faculty) {
+    public Faculty postFaculty(Faculty faculty) {
         return facultyRepository.save(faculty);
     }
 
-    public Faculty putFaculty (Faculty faculty) {
-        return facultyRepository.save(faculty);
+    public Faculty putFaculty(Faculty faculty) {
+        if (facultyRepository.findAll().contains(faculty)) {
+            return facultyRepository.save(faculty);
+        }
+        return null;
     }
 
-    public void deleteFaculty (Long id) {
+    public void deleteFaculty(Long id) {
         facultyRepository.deleteById(id);
     }
 }

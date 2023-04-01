@@ -5,8 +5,6 @@ import com.example.schoolhofwarts.repositories.StudentRepository;
 import org.springframework.stereotype.Service;
 
 
-
-
 @Service
 public class StudentService {
 
@@ -17,7 +15,7 @@ public class StudentService {
     }
 
     public Student getStudent(Long id) {
-        return studentRepository.findById(id).get();
+        return studentRepository.findById(id).orElse(null);
     }
 
     public Student postStudent(Student student) {
@@ -25,7 +23,10 @@ public class StudentService {
     }
 
     public Student putStudent(Student student) {
-        return studentRepository.save(student);
+        if (studentRepository.findAll().contains(student)) {
+            return studentRepository.save(student);
+        }
+        return null;
     }
 
     public void deleteStudent(Long id) {
